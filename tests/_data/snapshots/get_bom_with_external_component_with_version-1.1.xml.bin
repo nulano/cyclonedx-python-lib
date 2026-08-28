@@ -4,7 +4,6 @@
     <component type="library" bom-ref="external-lib-1.0.0">
       <name>external-lib</name>
       <version>1.0.0</version>
-      <scope>required</scope>
     </component>
   </components>
 </bom>

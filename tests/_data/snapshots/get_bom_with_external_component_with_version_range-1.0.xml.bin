@@ -3,8 +3,7 @@
   <components>
     <component type="library">
       <name>external-lib</name>
-      <version>1.0.0</version>
-      <scope>required</scope>
+      <version/>
       <modified>false</modified>
     </component>
   </components>

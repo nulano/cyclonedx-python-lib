@@ -1,16 +1,14 @@
 {
   "components": [
     {
-      "bom-ref": "external-lib-1.0.0",
+      "bom-ref": "external-lib",
       "name": "external-lib",
-      "scope": "required",
-      "type": "library",
-      "version": "1.0.0"
+      "type": "library"
     }
   ],
   "dependencies": [
     {
-      "ref": "external-lib-1.0.0"
+      "ref": "external-lib"
     }
   ],
   "metadata": {
@@ -28,7 +26,7 @@
   ],
   "serialNumber": "urn:uuid:1441d33a-e0fc-45b5-af3b-61ee52a88bac",
   "version": 1,
-  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
   "bomFormat": "CycloneDX",
-  "specVersion": "1.6"
+  "specVersion": "1.5"
 }

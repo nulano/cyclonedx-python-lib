@@ -599,8 +599,33 @@ def get_bom_with_external_references() -> Bom:
     return bom
 
 
-def get_bom_with_external_component_1_7() -> Bom:
-    bom = _make_bom(components=[get_component_external()])
+def get_bom_with_external_component_without_version() -> Bom:
+    bom = _make_bom(components=[get_component_external_without_version()])
+    return bom
+
+
+def get_bom_with_external_component_with_version() -> Bom:
+    bom = _make_bom(components=[get_component_external_with_version()])
+    return bom
+
+
+def get_bom_with_external_component_with_version_range() -> Bom:
+    bom = _make_bom(components=[get_component_external_with_version_range()])
+    return bom
+
+
+def get_bom_with_external_component_with_version_and_version_range_invalid() -> Bom:
+    bom = _make_bom(components=[get_component_external_with_version_and_version_range_invalid()])
+    return bom
+
+
+def get_bom_with_non_external_explicit_component_with_version_range_invalid() -> Bom:
+    bom = _make_bom(components=[get_component_non_external_explicit_with_version_range_invalid()])
+    return bom
+
+
+def get_bom_with_non_external_implicit_component_with_version_range_invalid() -> Bom:
+    bom = _make_bom(components=[get_component_non_external_implicit_with_version_range_invalid()])
     return bom
 
 
@@ -864,13 +889,62 @@ def get_component_setuptools_simple(
     )
 
 
-def get_component_external() -> Component:
+def get_component_external_without_version() -> Component:
     return Component(
-        name='external-lib', version='1.0.0',
+        name='external-lib',
         type=ComponentType.LIBRARY,
         is_external=True,
-        scope=ComponentScope.REQUIRED,
+        bom_ref='external-lib',
+    )
+
+
+def get_component_external_with_version() -> Component:
+    return Component(
+        name='external-lib',
+        version='1.0.0',
+        type=ComponentType.LIBRARY,
+        is_external=True,
         bom_ref='external-lib-1.0.0',
+    )
+
+
+def get_component_external_with_version_range() -> Component:
+    return Component(
+        name='external-lib',
+        version_range='vers:all/*',
+        type=ComponentType.LIBRARY,
+        is_external=True,
+        bom_ref='external-lib-with-range',
+    )
+
+
+def get_component_external_with_version_and_version_range_invalid() -> Component:
+    return Component(
+        name='external-lib',
+        version='1.0.0',
+        version_range='vers:all/*',
+        type=ComponentType.LIBRARY,
+        is_external=True,
+        bom_ref='external-lib-with-version-and-version-range',
+    )
+
+
+def get_component_non_external_explicit_with_version_range_invalid() -> Component:
+    return Component(
+        name='internal-lib',
+        version_range='vers:all/*',
+        type=ComponentType.LIBRARY,
+        is_external=False,
+        bom_ref='internal-lib-with-range',
+    )
+
+
+def get_component_non_external_implicit_with_version_range_invalid() -> Component:
+    return Component(
+        name='internal-lib',
+        version_range='vers:all/*',
+        type=ComponentType.LIBRARY,
+        bom_ref='internal-lib-with-range',
     )
 
 
@@ -1718,7 +1792,9 @@ all_get_bom_funct_with_incomplete_deps = {
     get_bom_with_licenses,
     get_bom_with_multiple_licenses,
     get_bom_for_issue_497_urls,
-    get_bom_with_external_component_1_7,
+    get_bom_with_external_component_without_version,
+    get_bom_with_external_component_with_version,
+    get_bom_with_external_component_with_version_range,
     get_bom_for_issue_598_multiple_components_with_purl_qualifiers,
     get_bom_with_component_setuptools_with_v16_fields,
     get_bom_for_issue_630_empty_property,
