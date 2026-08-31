@@ -1298,7 +1298,7 @@ class Component(Dependable):
 
     @version_range.setter
     def version_range(self, version_range: Optional[str]) -> None:
-        if version_range and not 1 <= len(version_range) <= 4096:
+        if version_range is not None and not 1 <= len(version_range) <= 4096:
             warn('`@.version_range`has a minimum length of 1 and a maximum length of 4096 characters.', UserWarning)
         self._version_range = version_range
 
@@ -1732,7 +1732,7 @@ class Component(Dependable):
 
     def __comparable_tuple(self) -> _ComparableTuple:
         return _ComparableTuple((
-            self.type, self.group, self.name, self.version, self.version_range,
+            self.type, self.group, self.name, self.version,
             self.bom_ref.value,
             None if self.purl is None else _ComparablePackageURL(self.purl),
             self.swid, self.cpe, _ComparableTuple(self.swhids),
@@ -1745,7 +1745,7 @@ class Component(Dependable):
             _ComparableTuple(self.components), self.evidence, self.release_notes, self.modified,
             _ComparableTuple(self.authors), _ComparableTuple(self.omnibor_ids), self.manufacturer,
             self.crypto_properties, _ComparableTuple(self.tags),
-            self.is_external,
+            self.is_external, self.version_range,
         ))
 
     def __eq__(self, other: object) -> bool:
@@ -1762,16 +1762,11 @@ class Component(Dependable):
         return hash(self.__comparable_tuple())
 
     def __repr__(self) -> str:
-        if not self.is_external:
-            # omit is_external unless it is set to the non-default value (i.e. True)
-            return f'<Component bom-ref={self.bom_ref!r}, group={self.group}, name={self.name}, ' \
-                f'version={self.version}, type={self.type}>'
-        elif self.version_range is None:
-            return f'<Component bom-ref={self.bom_ref!r}, group={self.group}, name={self.name}, ' \
-                f'version={self.version}, type={self.type}, is_external={self.is_external}>'
-        else:
-            return f'<Component bom-ref={self.bom_ref!r}, group={self.group}, name={self.name}, ' \
-                f'version_range={self.version_range}, type={self.type}, is_external={self.is_external}>'
+        version = f'versionRange={self.version_range}' \
+            if self.version_range is not None \
+            else f'version={self.version}'
+        return f'<Component bom-ref={self.bom_ref!r}, group={self.group}, name={self.name}, ' \
+            f'{version}, type={self.type}>'
 
 
 class _ComponentValidationHelper:

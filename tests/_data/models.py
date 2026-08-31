@@ -599,18 +599,12 @@ def get_bom_with_external_references() -> Bom:
     return bom
 
 
-def get_bom_with_external_component_without_version() -> Bom:
-    bom = _make_bom(components=[get_component_external_without_version()])
-    return bom
-
-
-def get_bom_with_external_component_with_version() -> Bom:
-    bom = _make_bom(components=[get_component_external_with_version()])
-    return bom
-
-
-def get_bom_with_external_component_with_version_range() -> Bom:
-    bom = _make_bom(components=[get_component_external_with_version_range()])
+def get_bom_with_external_component_1_7() -> Bom:
+    bom = _make_bom(components=[
+        get_component_external_without_version(),
+        get_component_external_with_version(),
+        get_component_external_with_version_range(),
+    ])
     return bom
 
 
@@ -894,6 +888,7 @@ def get_component_external_without_version() -> Component:
         name='external-lib',
         type=ComponentType.LIBRARY,
         is_external=True,
+        scope=ComponentScope.REQUIRED,
         bom_ref='external-lib',
     )
 
@@ -904,6 +899,7 @@ def get_component_external_with_version() -> Component:
         version='1.0.0',
         type=ComponentType.LIBRARY,
         is_external=True,
+        scope=ComponentScope.REQUIRED,
         bom_ref='external-lib-1.0.0',
     )
 
@@ -914,6 +910,7 @@ def get_component_external_with_version_range() -> Component:
         version_range='vers:all/*',
         type=ComponentType.LIBRARY,
         is_external=True,
+        scope=ComponentScope.REQUIRED,
         bom_ref='external-lib-with-range',
     )
 
@@ -1792,9 +1789,7 @@ all_get_bom_funct_with_incomplete_deps = {
     get_bom_with_licenses,
     get_bom_with_multiple_licenses,
     get_bom_for_issue_497_urls,
-    get_bom_with_external_component_without_version,
-    get_bom_with_external_component_with_version,
-    get_bom_with_external_component_with_version_range,
+    get_bom_with_external_component_1_7,
     get_bom_for_issue_598_multiple_components_with_purl_qualifiers,
     get_bom_with_component_setuptools_with_v16_fields,
     get_bom_for_issue_630_empty_property,
